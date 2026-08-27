@@ -3,6 +3,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getSession, setSession } from "@/lib/store";
 import { ExtractedQuestion } from "@/types/assessment";
 
+const DEFAULT_MARKS_AVAILABLE = 10;
+
 export const EXTRACT_QUESTIONS_PROMPT = `You are extracting structured data from a scanned exam page image. Return ONLY valid JSON, no markdown fences, no commentary.
 
 TASK: extract questions
@@ -13,7 +15,12 @@ RULES:
 - "questionNumber": The exact printed question label as it appears on the paper (e.g. "11(a)", "11(b)", "Q1", "2").
 - "text": Transcribe the complete question text accurately.
 - "page": The 1-indexed page number of the question paper where this question appears (Page 1 = 1, Page 2 = 2, etc.).
-- "marksAvailable": Optional number indicating maximum marks for this question if specified (e.g. 5). Omit or set to null if not indicated.
+- "marksAvailable": The maximum marks for this question as a number.
+- Extract marks from question-level labels such as "[5]", "(5 marks)", "5M", "Marks: 5", "2 x 5", or text beside the question.
+- If a section instruction applies to multiple questions, such as "Answer any five, 2 marks each", "Short Questions [2 marks each]", or "All questions carry 10 marks", apply that section's per-question marks to every question in that section.
+- If a question has sub-parts with separate marks, set each sub-part's own marks when the sub-parts are extracted as separate question entries.
+- Do not use the student's answer-sheet marks or awarded score as marksAvailable.
+- If marks are not visibly provided at question level or section level, set "marksAvailable" to ${DEFAULT_MARKS_AVAILABLE}.
 - Do not invent questions that are not visibly present on the page.
 - Do not attempt to judge whether a question was left unanswered.
 
@@ -50,6 +57,24 @@ function formatImagePart(dataUrl: string) {
 
 function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+function normalizeMarksAvailable(value: unknown): number {
+  if (typeof value === "number" && Number.isFinite(value) && value > 0) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const match = value.match(/(\d+(?:\.\d+)?)/);
+    if (match) {
+      const parsed = Number(match[1]);
+      if (Number.isFinite(parsed) && parsed > 0) {
+        return parsed;
+      }
+    }
+  }
+
+  return DEFAULT_MARKS_AVAILABLE;
 }
 
 function sanitizeAndParseJSON(rawText: string): ExtractedQuestion[] {
@@ -98,10 +123,7 @@ function sanitizeAndParseJSON(rawText: string): ExtractedQuestion[] {
         questionNumber: record.questionNumber.trim(),
         text: record.text.trim(),
         page: pageNum,
-        marksAvailable:
-          record.marksAvailable != null
-            ? Number(record.marksAvailable)
-            : undefined,
+        marksAvailable: normalizeMarksAvailable(record.marksAvailable),
       };
     },
   );

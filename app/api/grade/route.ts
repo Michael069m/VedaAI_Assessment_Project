@@ -3,8 +3,15 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getSession, setSession } from "@/lib/store";
 import { GradingResult } from "@/types/assessment";
 
+const DEFAULT_MARKS_TOTAL = 10;
+
 function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+function getQuestionMarksTotal(marksAvailable: unknown): number {
+  const marks = Number(marksAvailable);
+  return Number.isFinite(marks) && marks > 0 ? marks : DEFAULT_MARKS_TOTAL;
 }
 
 export const GRADE_PROMPT_SYSTEM = `You are an expert academic examiner. Grade the provided batch of student answers against their respective questions.
@@ -25,7 +32,7 @@ RULES:
 1. You MUST include a grading object for EVERY questionId listed in the input array.
 2. "questionId": Must EXACTLY match the questionId provided in the input. Do NOT invent or alter questionIds.
 3. "marksAwarded": An integer or float from 0 up to marksTotal.
-4. "marksTotal": The maximum available marks specified for the question (default to 10 if omitted).
+4. "marksTotal": Must equal the marksAvailable value provided for that question. Do not invent a different total.
 5. "verdict": Must be one of: "correct", "partially_correct", "incorrect", "ungraded".
 6. "feedback": A concise 1-2 sentence constructive evaluation explaining the grade.
 7. Return ONLY the raw JSON array. No markdown code fences, no conversational preambles.`;
@@ -62,8 +69,7 @@ export async function POST(req: NextRequest) {
     for (const mapping of mappings) {
       if (mapping.status === "unanswered" && mapping.questionId) {
         const question = questionsMap.get(mapping.questionId);
-        const marksTotal =
-          question?.marksAvailable != null ? question.marksAvailable : 10;
+        const marksTotal = getQuestionMarksTotal(question?.marksAvailable);
         gradingResults.push({
           questionId: mapping.questionId,
           marksAwarded: 0,
@@ -85,7 +91,7 @@ export async function POST(req: NextRequest) {
           questionId: q.id,
           questionNumber: q.questionNumber,
           questionText: q.text,
-          marksAvailable: q.marksAvailable != null ? q.marksAvailable : 10,
+          marksAvailable: getQuestionMarksTotal(q.marksAvailable),
           studentAnswerText: a.text,
           answerPage: a.boundingBoxes[0]?.page ?? null,
         };
@@ -144,13 +150,14 @@ export async function POST(req: NextRequest) {
           for (const item of parsed) {
             if (item && typeof item.questionId === "string") {
               const qId = item.questionId.trim();
-              const marksTotal = Number(item.marksTotal) || 10;
+              const batchInput = matchedPairsToGrade.find(
+                (pair) => pair.questionId === qId,
+              );
+              const marksTotal =
+                batchInput?.marksAvailable ?? DEFAULT_MARKS_TOTAL;
               const marksAwarded = Math.max(
                 0,
                 Math.min(marksTotal, Number(item.marksAwarded) || 0),
-              );
-              const batchInput = matchedPairsToGrade.find(
-                (pair) => pair.questionId === qId,
               );
 
               resultMap.set(qId, {
@@ -196,13 +203,14 @@ export async function POST(req: NextRequest) {
             for (const item of parsed) {
               if (item && typeof item.questionId === "string") {
                 const qId = item.questionId.trim();
-                const marksTotal = Number(item.marksTotal) || 10;
+                const batchInput = matchedPairsToGrade.find(
+                  (pair) => pair.questionId === qId,
+                );
+                const marksTotal =
+                  batchInput?.marksAvailable ?? DEFAULT_MARKS_TOTAL;
                 const marksAwarded = Math.max(
                   0,
                   Math.min(marksTotal, Number(item.marksAwarded) || 0),
-                );
-                const batchInput = matchedPairsToGrade.find(
-                  (pair) => pair.questionId === qId,
                 );
 
                 resultMap.set(qId, {
@@ -226,6 +234,10 @@ export async function POST(req: NextRequest) {
               }
             }
           }
+          console.log(
+            "Code ran successfully on time",
+            new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+          );
         } catch (err: unknown) {
           console.error(
             "Batch grading Attempt 2 failed:",
