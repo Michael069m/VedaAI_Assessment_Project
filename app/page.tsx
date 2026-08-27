@@ -581,7 +581,7 @@ function UploadCard({
 function DocumentViewer({
   pages,
   answers,
-  selectedAnswerId,
+  highlightedAnswerIds,
   selectedPage,
   setSelectedPage,
   zoom,
@@ -591,7 +591,7 @@ function DocumentViewer({
 }: {
   pages: string[];
   answers: ExtractedAnswer[];
-  selectedAnswerId: string | null;
+  highlightedAnswerIds: string[];
   selectedPage: number;
   setSelectedPage: (p: number) => void;
   zoom: number;
@@ -600,9 +600,10 @@ function DocumentViewer({
   onModeChange: (mode: ViewerMode) => void;
 }) {
   const isQuestionPaper = mode === "questionPaper";
+  const highlightedAnswerIdSet = new Set(highlightedAnswerIds);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-[#F3F4F6]">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[#F3F4F6]">
       {/* Controls bar */}
       <div className="flex items-center justify-between px-4 py-2 bg-[#2F3137] border-b border-[#26282D] flex-shrink-0 text-white">
         <div className="flex items-center gap-3">
@@ -680,7 +681,7 @@ function DocumentViewer({
 
       {/* Image canvas */}
       <div
-        className="flex-1 overflow-auto p-4"
+        className="min-h-0 flex-1 overflow-auto p-4"
         style={{ background: "#F3F4F6" }}
       >
         {pages[selectedPage - 1] ? (
@@ -703,9 +704,9 @@ function DocumentViewer({
             {!isQuestionPaper &&
               answers.flatMap((ans) =>
                 ans.boundingBoxes
+                  .filter(() => highlightedAnswerIdSet.has(ans.id))
                   .filter((box) => box.page === selectedPage)
                   .map((box, bIdx) => {
-                    const isSelected = selectedAnswerId === ans.id;
                     const style = boundingBoxToStyle(box);
                     return (
                       <div
@@ -714,17 +715,15 @@ function DocumentViewer({
                         style={{
                           ...style,
                           position: "absolute",
-                          border: `2px solid ${isSelected ? "#F97316" : "#0D9488"}`,
-                          background: isSelected
-                            ? "rgba(249,115,22,0.08)"
-                            : "rgba(13,148,136,0.06)",
-                          zIndex: isSelected ? 20 : 10,
+                          border: "2px solid #16A34A",
+                          background: "rgba(22,163,74,0.10)",
+                          zIndex: 20,
                         }}
                       >
                         <span
                           className="absolute -top-6 left-0 text-[10px] font-bold px-1.5 py-0.5 rounded text-white shadow-sm"
                           style={{
-                            background: isSelected ? "#F97316" : "#0D9488",
+                            background: "#16A34A",
                           }}
                         >
                           {ans.detectedQuestionNumber
@@ -765,6 +764,7 @@ export default function Home() {
   const [mobileTab, setMobileTab] = useState<MobileTab>("questions");
   const [viewerMode, setViewerMode] = useState<ViewerMode>("answerSheet");
   const [zoom, setZoom] = useState(100);
+  const [expandAllQuestions, setExpandAllQuestions] = useState(false);
 
   const qpInputRef = useRef<HTMLInputElement>(null);
   const asInputRef = useRef<HTMLInputElement>(null);
@@ -869,8 +869,6 @@ export default function Home() {
           grading: gData.grading ?? [],
         };
         setSession(built);
-        if (built.questions.length > 0)
-          setSelectedQuestionId(built.questions[0].id);
       } else {
         const sessionData = await sessionRes.json();
         const s: SessionState = sessionData.session ?? {
@@ -883,9 +881,10 @@ export default function Home() {
           grading: gData.grading ?? [],
         };
         setSession(s);
-        if (s.questions.length > 0) setSelectedQuestionId(s.questions[0].id);
       }
 
+      setSelectedQuestionId(null);
+      setExpandAllQuestions(false);
       setAppState("results");
     } catch (err: unknown) {
       const msg =
@@ -902,6 +901,7 @@ export default function Home() {
     setSession(null);
     setError(null);
     setSelectedQuestionId(null);
+    setExpandAllQuestions(false);
     setSelectedPage(1);
     setViewerMode("answerSheet");
     setZoom(100);
@@ -914,6 +914,26 @@ export default function Home() {
   const selectedAnswer = selectedMapping
     ? (session?.answers.find((a) => a.id === selectedMapping.answerId) ?? null)
     : null;
+
+  const allMatchedAnswerIds =
+    session?.mappings
+      .filter((mapping) => mapping.status === "matched" && mapping.answerId)
+      .map((mapping) => mapping.answerId!)
+      .filter((answerId, index, answerIds) => answerIds.indexOf(answerId) === index) ?? [];
+
+  const highlightedAnswerIds = selectedAnswer
+    ? [selectedAnswer.id]
+    : expandAllQuestions
+      ? allMatchedAnswerIds
+      : [];
+
+  const expandedQuestionIds = new Set(
+    selectedQuestionId
+      ? [selectedQuestionId]
+      : expandAllQuestions
+        ? (session?.questions.map((question) => question.id) ?? [])
+        : [],
+  );
 
   const clampPage = (page: number, mode: ViewerMode): number => {
     const maxPages =
@@ -931,6 +951,7 @@ export default function Home() {
 
   const handleSelectQuestion = (qId: string) => {
     const question = session?.questions.find((item) => item.id === qId) ?? null;
+    setExpandAllQuestions(false);
     setSelectedQuestionId(qId);
     if (question) {
       const matchedMapping = session?.mappings.find(
@@ -948,6 +969,13 @@ export default function Home() {
           clampPage(question.page, "questionPaper"),
       );
     }
+  };
+
+  const handleExpandAllQuestions = () => {
+    setSelectedQuestionId(null);
+    setExpandAllQuestions(true);
+    setViewerMode("answerSheet");
+    setSelectedPage(1);
   };
 
   const activePages =
@@ -977,7 +1005,7 @@ export default function Home() {
         <MobileHeader onReset={resetAll} showReset={isResults} />
         {/* Top bars */}
         <DesktopTopBar onReset={resetAll} showReset={isResults} />
-        <div className="mr-5 mb-3  py-4 h-[100%]">
+        <div className="mb-3 mr-5 flex min-h-0 flex-1 flex-col overflow-hidden py-4">
           {/* Error banner */}
           {error && (
             <div
@@ -1148,7 +1176,7 @@ export default function Home() {
 
           {/* ══════════════ RESULTS SCREEN ══════════════ */}
           {appState === "results" && session && (
-            <div className="flex-1 overflow-hidden flex flex-col">
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
               {/* ── Mobile: tab switcher ── */}
               <div className="md:hidden flex border-b border-gray-200 bg-white flex-shrink-0">
                 {(["questions", "sheet"] as MobileTab[]).map((tab) => (
@@ -1175,7 +1203,7 @@ export default function Home() {
 
               {/* ── Mobile: Questions panel ── */}
               {mobileTab === "questions" && (
-                <div className="md:hidden flex-1 overflow-auto bg-white">
+                <div className="flex-1 overflow-auto bg-white md:hidden">
                   <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
                     <span className="text-xs font-semibold text-gray-600">
                       Extracted Questions (from question paper)
@@ -1183,12 +1211,13 @@ export default function Home() {
                   </div>
                   <QuestionList
                     questions={session.questions}
-                    mappings={session.mappings}
-                    grading={session.grading}
-                    selectedQuestionId={selectedQuestionId}
-                    onSelectQuestion={(qId) => {
-                      handleSelectQuestion(qId);
-                      setMobileTab("sheet");
+                  mappings={session.mappings}
+                  grading={session.grading}
+                  selectedQuestionId={selectedQuestionId}
+                  expandedQuestionIds={expandedQuestionIds}
+                  onSelectQuestion={(qId) => {
+                    handleSelectQuestion(qId);
+                    setMobileTab("sheet");
                     }}
                   />
                 </div>
@@ -1196,11 +1225,11 @@ export default function Home() {
 
               {/* ── Mobile: Answer Sheet panel ── */}
               {mobileTab === "sheet" && (
-                <div className="md:hidden flex-1 overflow-hidden flex flex-col">
+                <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:hidden">
                   <DocumentViewer
                     pages={activePages}
                     answers={session.answers}
-                    selectedAnswerId={selectedAnswer?.id ?? null}
+                    highlightedAnswerIds={highlightedAnswerIds}
                     selectedPage={selectedPage}
                     setSelectedPage={setSelectedPage}
                     zoom={zoom}
@@ -1212,10 +1241,10 @@ export default function Home() {
               )}
 
               {/* ── Desktop: two-panel layout ── */}
-              <div className="hidden md:flex flex-1 overflow-hidden">
+              <div className="hidden min-h-0 flex-1 overflow-hidden md:flex">
                 {/* Left panel: Questions */}
                 <div
-                  className="flex flex-col bg-[#F8F9FB] border-r border-[#E5E7EB] overflow-hidden flex-shrink-0"
+                  className="flex min-h-0 flex-shrink-0 flex-col overflow-hidden border-r border-[#E5E7EB] bg-[#F8F9FB]"
                   style={{ width: 388 }}
                 >
                   <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
@@ -1223,29 +1252,32 @@ export default function Home() {
                       Extracted Questions (from question paper)
                     </span>
                     <button
+                      type="button"
+                      onClick={handleExpandAllQuestions}
                       className="text-xs font-medium"
-                      style={{ color: "#F97316" }}
+                      style={{ color: expandAllQuestions ? "#16A34A" : "#F97316" }}
                     >
                       Expand all
                     </button>
                   </div>
-                  <div className="flex-1 overflow-auto">
+                  <div className="min-h-0 flex-1 overflow-auto">
                     <QuestionList
                       questions={session.questions}
                       mappings={session.mappings}
                       grading={session.grading}
                       selectedQuestionId={selectedQuestionId}
+                      expandedQuestionIds={expandedQuestionIds}
                       onSelectQuestion={handleSelectQuestion}
                     />
                   </div>
                 </div>
 
                 {/* Right panel: Answer sheet viewer */}
-                <div className="flex-1 overflow-hidden bg-[#F3F4F6]">
+                <div className="min-h-0 flex-1 overflow-hidden bg-[#F3F4F6]">
                   <DocumentViewer
                     pages={activePages}
                     answers={session.answers}
-                    selectedAnswerId={selectedAnswer?.id ?? null}
+                    highlightedAnswerIds={highlightedAnswerIds}
                     selectedPage={selectedPage}
                     setSelectedPage={setSelectedPage}
                     zoom={zoom}

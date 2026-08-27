@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   ExtractedQuestion,
   QuestionAnswerMapping,
@@ -12,6 +12,7 @@ export interface QuestionListProps {
   mappings: QuestionAnswerMapping[];
   grading?: GradingResult[];
   selectedQuestionId: string | null;
+  expandedQuestionIds: Set<string>;
   onSelectQuestion: (questionId: string) => void;
 }
 
@@ -57,15 +58,9 @@ export default function QuestionList({
   mappings,
   grading = [],
   selectedQuestionId,
+  expandedQuestionIds,
   onSelectQuestion,
 }: QuestionListProps) {
-  const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
-
-  const toggleExpand = (qId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setExpandedIds((prev) => ({ ...prev, [qId]: !prev[qId] }));
-  };
-
   // Sort questions using natural-sort order (not extraction order)
   const sortedQuestions = [...questions].sort((a, b) =>
     naturalSortQuestionNumbers(a.questionNumber, b.questionNumber),
@@ -95,10 +90,7 @@ export default function QuestionList({
             const isSelected = selectedQuestionId === q.id;
             const mapping = mappingsByQId.get(q.id);
             const grade = gradingByQId.get(q.id);
-            const isExpanded = !!expandedIds[q.id];
-
-            const status = mapping ? mapping.status : "unanswered";
-            const isAnswered = status === "matched";
+            const isExpanded = expandedQuestionIds.has(q.id);
 
             return (
               <div
@@ -106,7 +98,7 @@ export default function QuestionList({
                 onClick={() => onSelectQuestion(q.id)}
                 className={`group relative cursor-pointer rounded-[20px] border p-4 transition-all duration-200 ${
                   isSelected
-                    ? "bg-[#FFF7F0] border-[#F97316] shadow-[0_14px_30px_rgba(249,115,22,0.14)]"
+                    ? "bg-emerald-50/70 border-emerald-500 shadow-[0_14px_30px_rgba(22,163,74,0.14)]"
                     : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.05)]"
                 }`}
               >
@@ -117,7 +109,7 @@ export default function QuestionList({
                     <span
                       className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold font-mono shrink-0 shadow-sm ${
                         isSelected
-                          ? "bg-[#F97316] text-white"
+                          ? "bg-emerald-600 text-white"
                           : "bg-slate-900 text-white"
                       }`}
                     >
@@ -137,22 +129,24 @@ export default function QuestionList({
                         {grade.marksAwarded}/{grade.marksTotal}
                       </span>
                     )}
+                    {mapping?.status === "unanswered" && (
+                      <span className="inline-flex items-center rounded-full border border-amber-200/70 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-600">
+                        Unanswered
+                      </span>
+                    )}
 
                     {grade && (
-                      <button
-                        type="button"
-                        onClick={(e) => toggleExpand(q.id, e)}
+                      <span
                         className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors border ${
                           isExpanded
                             ? "bg-slate-100 border-slate-300 text-slate-700"
-                            : "bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100"
+                            : "bg-slate-50 border-slate-200 text-slate-500"
                         }`}
-                        aria-label="Toggle Feedback"
                       >
                         <span className="text-xs">
                           {isExpanded ? "▲" : "▼"}
                         </span>
-                      </button>
+                      </span>
                     )}
                   </div>
                 </div>
