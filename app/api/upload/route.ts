@@ -3,6 +3,8 @@ import { setSession, SessionData } from "@/lib/store";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import { createCanvas } from "@napi-rs/canvas";
 
+pdfjsLib.GlobalWorkerOptions.workerSrc = "";
+
 function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
