@@ -31,117 +31,34 @@ interface SessionState {
    Icons (inline SVG to avoid extra dependencies)
 ───────────────────────────────────────────────────────── */
 function UploadIcon() {
-  return (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#9CA3AF"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-      <polyline points="17 8 12 3 7 8" />
-      <line x1="12" y1="3" x2="12" y2="15" />
-    </svg>
-  );
+  return <img src="/icons/upload.svg" alt="Upload Icon" className="w-7 h-7" />;
 }
 
 function HomeIcon({ active }: { active?: boolean }) {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={active ? "#F97316" : "#9CA3AF"}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  );
+  return <img src="/icons/home.png" alt="Home Icon" className="w-4 h-4" />;
 }
 
 function ClassroomIcon({ active }: { active?: boolean }) {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={active ? "#F97316" : "#9CA3AF"}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
-    </svg>
-  );
+  return <img src="/icons/class.png" alt="Class Icon" className="w-4 h-3" />;
 }
 
 function AssignmentIcon({ active }: { active?: boolean }) {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={active ? "#F97316" : "#9CA3AF"}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="5" y="2" width="14" height="20" rx="2" />
-      <line x1="9" y1="7" x2="15" y2="7" />
-      <line x1="9" y1="11" x2="15" y2="11" />
-      <line x1="9" y1="15" x2="13" y2="15" />
-    </svg>
+    <img
+      src="/icons/assignments.png"
+      alt="Assignment Icon"
+      className="w-4 h-4"
+    />
   );
 }
 
 function ExamIcon({ active }: { active?: boolean }) {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={active ? "#F97316" : "#9CA3AF"}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="16" y1="13" x2="8" y2="13" />
-      <line x1="16" y1="17" x2="8" y2="17" />
-      <polyline points="10 9 9 9 8 9" />
-    </svg>
-  );
+  return <img src="/icons/exams.png" alt="Exam Icon" className="w-4 h-4" />;
 }
 
 function LibraryIcon({ active }: { active?: boolean }) {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={active ? "#F97316" : "#9CA3AF"}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
+    <img src="/icons/library.png" alt="Library Icon" className="w-4 h-4" />
   );
 }
 
@@ -152,30 +69,54 @@ function VedaLogo({ size = 32 }: { size?: number }) {
   return (
     <div
       style={{ width: size, height: size }}
-      className="bg-black rounded-xl flex-shrink-0 flex items-center justify-center"
+      className=" rounded-[14px] flex-shrink-0 flex items-center justify-center"
     >
-      <svg
-        width={size * 0.55}
-        height={size * 0.55}
-        viewBox="0 0 20 20"
-        fill="none"
-      >
-        <path
-          d="M10 1L2 5.5V14.5L10 19L18 14.5V5.5L10 1Z"
-          fill="white"
-          fillOpacity="0.15"
-          stroke="white"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M6 7L10 15L14 7"
-          stroke="white"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <img src="/icons/logo.png" alt="VedaAI Logo" className="" />
     </div>
+  );
+}
+
+function SidebarSparkleIcon() {
+  return <img src="/icons/ai-but.png" alt="Sparkle Icon" className="w-4 h-4" />;
+}
+
+function SidebarCollapseIcon() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 25 25"
+      fill="none"
+      className="text-[#8A8A8A]"
+    >
+      <rect
+        x="3.5"
+        y="4.5"
+        width="18"
+        height="17"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <line
+        x1="10"
+        y1="5.5"
+        x2="10"
+        y2="19.5"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function SchoolCrest() {
+  return (
+    <img
+      src="/icons/dps.png"
+      alt="Sparkle Icon"
+      className="w-[50px] h-[50px]"
+    />
   );
 }
 
@@ -184,85 +125,11 @@ function VedaLogo({ size = 32 }: { size?: number }) {
 ───────────────────────────────────────────────────────── */
 function TeacherAvatar() {
   return (
-    <div className="relative mx-auto" style={{ width: 120, height: 120 }}>
-      {/* Glow rings */}
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle, #FED7AA 0%, #FFF7ED 55%, transparent 75%)",
-        }}
-      />
-      {/* Avatar circle */}
-      <div
-        className="absolute inset-3 rounded-full flex items-center justify-center overflow-hidden"
-        style={{
-          background: "#FFF7ED",
-          border: "3px solid white",
-          boxShadow: "0 4px 20px rgba(249,115,22,0.2)",
-        }}
-      >
-        <svg viewBox="0 0 80 96" width="72" height="72" fill="none">
-          {/* Body / shirt */}
-          <rect x="15" y="62" width="50" height="34" rx="4" fill="#F97316" />
-          {/* Collar */}
-          <path d="M30 62 L40 75 L50 62" fill="#EA580C" />
-          {/* Head */}
-          <circle cx="40" cy="40" r="20" fill="#FDDCB5" />
-          {/* Hair */}
-          <path
-            d="M20 36 Q22 14 40 16 Q58 14 60 36 Q58 22 40 22 Q22 22 20 36Z"
-            fill="#7C3AED"
-          />
-          {/* Eyes */}
-          <ellipse cx="34" cy="40" rx="2.5" ry="3" fill="#4B2D1A" />
-          <ellipse cx="46" cy="40" rx="2.5" ry="3" fill="#4B2D1A" />
-          {/* Eye shine */}
-          <circle cx="35" cy="39" r="0.8" fill="white" />
-          <circle cx="47" cy="39" r="0.8" fill="white" />
-          {/* Smile */}
-          <path
-            d="M34 50 Q40 55 46 50"
-            stroke="#C2855A"
-            strokeWidth="1.5"
-            fill="none"
-            strokeLinecap="round"
-          />
-          {/* Books held */}
-          <rect
-            x="54"
-            y="66"
-            width="12"
-            height="16"
-            rx="1.5"
-            fill="white"
-            opacity="0.9"
-          />
-          <rect
-            x="52"
-            y="69"
-            width="12"
-            height="16"
-            rx="1.5"
-            fill="#E0E7FF"
-            opacity="0.7"
-          />
-        </svg>
-      </div>
-      {/* Decorative dots */}
-      <div
-        className="animate-pulse-dot absolute top-3 right-5 w-2.5 h-2.5 rounded-full"
-        style={{ background: "#F97316", opacity: 0.6 }}
-      />
-      <div
-        className="animate-pulse-dot absolute bottom-4 left-4 w-2 h-2 rounded-full"
-        style={{ background: "#FDBA74", opacity: 0.7, animationDelay: "0.5s" }}
-      />
-      <div
-        className="animate-pulse-dot absolute top-10 left-0 w-1.5 h-1.5 rounded-full"
-        style={{ background: "#FED7AA", opacity: 0.8, animationDelay: "1s" }}
-      />
-    </div>
+    <img
+      src="/icons/teacher.png"
+      alt="Teacher image"
+      className="w-[180px] h-[180px]"
+    />
   );
 }
 
@@ -276,7 +143,7 @@ function SparkleLoader() {
       style={{ width: 100, height: 100 }}
     >
       {/* Large center star */}
-      <svg
+      {/* <svg
         className="animate-sparkle-1 absolute"
         style={{ top: "10%", left: "50%", transform: "translateX(-50%)" }}
         width="52"
@@ -287,24 +154,28 @@ function SparkleLoader() {
           d="M26 0L29.5 22.5L52 26L29.5 29.5L26 52L22.5 29.5L0 26L22.5 22.5L26 0Z"
           fill="#F97316"
         />
-      </svg>
+      </svg> */}
+      <img
+        src="/icons/ani-star1.svg"
+        alt="Sparkle Icon"
+        className="animate-sparkle-1 absolute"
+        width="80"
+        height="80"
+        style={{ top: "-8px", left: "30%", transform: "translateX(-50%)" }}
+      />
       {/* Small star top-right */}
-      <svg
+      <img
+        src="/icons/ani-star2.svg"
         className="animate-sparkle-2 absolute"
-        style={{ top: 0, right: 0 }}
-        width="26"
-        height="26"
-        viewBox="0 0 26 26"
-      >
-        <path
-          d="M13 0L14.8 11.2L26 13L14.8 14.8L13 26L11.2 14.8L0 13L11.2 11.2L13 0Z"
-          fill="#FB923C"
-        />
-      </svg>
+        style={{ bottom: 0, left: 0 }}
+        width="50"
+        height="50"
+        // viewBox="0 0 26 26"
+      ></img>
       {/* Tiny star bottom-left */}
       <svg
         className="animate-sparkle-3 absolute"
-        style={{ bottom: 8, left: 2 }}
+        style={{ bottom: 8, right: 2 }}
         width="18"
         height="18"
         viewBox="0 0 18 18"
@@ -322,42 +193,55 @@ function SparkleLoader() {
    Sidebar Navigation
 ───────────────────────────────────────────────────────── */
 function Sidebar({ collapsed }: { collapsed: boolean }) {
-  const w = collapsed ? 56 : 176;
+  const w = collapsed ? 72 : 340;
   return (
     <aside
-      className="hidden md:flex flex-col flex-shrink-0 bg-white border-r border-gray-100 transition-all duration-300 overflow-hidden"
-      style={{ width: w }}
+      className="m-[14px] hidden min-h-0 flex-shrink-0 flex-col overflow-hidden bg-white shadow-[0_18px_42px_rgba(0,0,0,0.16)] transition-all duration-300 md:flex"
+      style={{
+        width: w,
+        height: "calc(100vh - 28px)",
+        borderRadius: collapsed ? 18 : 14,
+      }}
     >
       {/* Logo */}
-      <div className="flex items-center gap-2.5 px-3 py-4 border-b border-gray-50">
-        <VedaLogo size={32} />
+      <div
+        className={`flex items-center ${collapsed ? "justify-center px-3 pt-6" : "justify-between px-[30px] pt-[25px]"}`}
+      >
+        <div className="flex items-center gap-3">
+          <VedaLogo size={44} />
+          {!collapsed && (
+            <span className="text-[30px] font-extrabold leading-none tracking-normal text-[#2D2D2D]">
+              VedaAI
+            </span>
+          )}
+        </div>
         {!collapsed && (
-          <span className="font-bold text-base text-gray-900 whitespace-nowrap">
-            VedaAI
-          </span>
+          <button className="flex h-9 w-9 items-center justify-center rounded-lg text-[#8A8A8A]">
+            <SidebarCollapseIcon />
+          </button>
         )}
       </div>
 
       {/* AI Teacher's Toolkit */}
       {!collapsed && (
-        <div className="px-2.5 pt-3 pb-1">
+        <div className="px-[28px] pt-[72px]">
           <button
-            className="w-full flex items-center gap-1.5 px-3 py-2 rounded-xl text-white text-xs font-semibold whitespace-nowrap"
-            style={{ background: "#F97316" }}
+            className="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-full border-4 border-[#EF7855] px-5 text-[17px] font-medium leading-none text-white shadow-[inset_0_15px_28px_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.18)]"
+            style={{
+              background:
+                "radial-gradient(circle at 50% -20%, #555 0%, #363636 40%, #292929 100%)",
+            }}
           >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path
-                d="M6 0L6.9 5.1L12 6L6.9 6.9L6 12L5.1 6.9L0 6L5.1 5.1L6 0Z"
-                fill="white"
-              />
-            </svg>
+            <SidebarSparkleIcon />
             AI Teacher&apos;s Toolkit
           </button>
         </div>
       )}
 
       {/* Nav */}
-      <nav className="flex-1 px-2 py-2 space-y-0.5">
+      <nav
+        className={`flex-1 ${collapsed ? "px-3 pt-9" : "space-y-[12px] px-[31px] pt-[60px]"}`}
+      >
         {[
           { label: "Home", Icon: HomeIcon, active: false },
           { label: "My Classroom", Icon: ClassroomIcon, active: false },
@@ -367,51 +251,74 @@ function Sidebar({ collapsed }: { collapsed: boolean }) {
         ].map(({ label, Icon, active }) => (
           <button
             key={label}
-            className={`w-full flex items-center gap-2.5 px-2 py-2 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
+            className={`flex w-full items-center whitespace-nowrap transition-colors ${
               active
-                ? "bg-orange-50 text-orange-600"
-                : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-            }`}
+                ? "h-[44px] rounded-[8px] bg-[#EEEEEE] text-[#2D2D2D]"
+                : "h-[39px] text-[#858585] hover:bg-[#F5F5F5] hover:text-[#3B3B3B]"
+            } ${collapsed ? "justify-center rounded-xl" : "gap-3 px-3 text-[16px] font-normal"}`}
+            style={{
+              fontWeight: active ? 600 : 400,
+            }}
           >
-            <Icon active={active} />
+            <span
+              className={`flex h-6 w-6 items-center justify-center ${
+                active ? "text-[#2D2D2D]" : "text-[#858585]"
+              }`}
+            >
+              <Icon active={active} />
+            </span>
             {!collapsed && <span>{label}</span>}
           </button>
         ))}
       </nav>
 
-      {/* Bottom: Settings + User */}
+      {/* Bottom: Settings + School */}
       {!collapsed && (
-        <div className="border-t border-gray-100 p-2.5 space-y-1">
-          <button className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors">
+        <div className="px-[29px] pb-[25px]">
+          <button className="mb-[16px] flex h-10 w-full items-center gap-3 px-3 text-[16px] font-normal text-[#858585] transition-colors hover:text-[#3B3B3B]">
             <svg
-              width="14"
-              height="14"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <circle cx="12" cy="12" r="3" />
               <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
             </svg>
             Settings
           </button>
-          <div className="flex items-center gap-2 px-2 py-1.5">
-            <div
-              className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold text-white"
-              style={{ background: "#F97316" }}
-            >
-              D
-            </div>
+          <div className="flex h-[91px] items-center gap-[14px] rounded-[12px] bg-[#EEEEEE] px-[17px]">
+            <SchoolCrest />
             <div className="min-w-0">
-              <div className="text-xs font-semibold text-gray-800 truncate">
+              <div className="truncate text-[16px] font-bold leading-tight text-[#2D2D2D]">
                 Delhi Public School
               </div>
-              <div className="text-[10px] text-gray-400 truncate">
+              <div className="mt-2 truncate text-[14px] font-normal leading-tight text-[#5F5F5F]">
                 Bokaro Steel City
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {collapsed && (
+        <div className="px-4 pb-6">
+          <button className="flex h-12 w-full items-center justify-center rounded-xl text-[#858585] hover:bg-[#F5F5F5]">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06A2 2 0 014.35 16.88l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06A2 2 0 017.04 4.3l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06A2 2 0 0119.65 7.12l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+            </svg>
+          </button>
         </div>
       )}
     </aside>
@@ -429,85 +336,68 @@ function DesktopTopBar({
   showReset: boolean;
 }) {
   return (
-    <div className="hidden md:flex items-center justify-between px-6 py-2.5 bg-white border-b border-[#E8E8EC] flex-shrink-0 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
-      <div className="flex items-center gap-2 text-sm text-gray-500">
-        <button className="text-gray-400 hover:text-gray-600">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
-            <path d="M19 12H5M12 5l-7 7 7 7" />
-          </svg>
+    <div className="mr-[24px] mt-[14px] hidden h-[60px] flex-shrink-0 items-center justify-between rounded-[12px] bg-white px-6 shadow-[0_14px_34px_rgba(0,0,0,0.08)] md:flex">
+      <div className="flex items-center gap-3 text-sm text-[#9CA3AF]">
+        <button className="flex h-9 w-9 items-center justify-center rounded-full text-[#2D2D2D] transition-colors hover:bg-[#F5F5F5]">
+          <img
+            src="/icons/Arrow_Left.svg"
+            alt="Arrow_Left Icon"
+            className="w-5 h-5"
+          />
         </button>
         <svg
-          width="14"
-          height="14"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="#9CA3AF"
           strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
           <polyline points="14 2 14 8 20 8" />
         </svg>
-        <span className="text-gray-600 text-sm font-medium">Exams</span>
+        <span className="text-[16px] font-medium text-[#8E8E8E]">Exams</span>
       </div>
       <div className="flex items-center gap-3">
         {showReset && (
           <button
             onClick={onReset}
-            className="text-xs font-medium text-gray-600 hover:text-gray-800 border border-[#E5E7EB] rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors"
+            className="rounded-lg border border-[#E5E7EB] px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
           >
             ← New Session
           </button>
         )}
-        <button className="text-gray-400 hover:text-gray-600">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01" />
-          </svg>
+        <button className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F7F7F7] text-[#2D2D2D] transition-colors hover:bg-[#EEEEEE]">
+          <img
+            src="/icons/help.svg"
+            alt="Notification Icon"
+            className="w-5 h-5"
+          />
         </button>
-        <button className="text-gray-400 hover:text-gray-600 relative">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-orange-500" />
+        <button className="relative flex h-9 w-9 items-center justify-center rounded-full bg-[#F7F7F7] text-[#2D2D2D] transition-colors hover:bg-[#EEEEEE]">
+          <img
+            src="/icons/bell.svg"
+            alt="Notification Icon"
+            className="w-5 h-5"
+          />
+          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#FF5A1F]" />
         </button>
-        <button className="w-5 h-5 text-orange-500">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M8 0L9 7L16 8L9 9L8 16L7 9L0 8L7 7L8 0Z"
-              fill="currentColor"
-            />
-          </svg>
+        <button className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#2D2D2D] transition-colors hover:bg-[#F7F7F7]">
+          <img src="/icons/star.svg" alt="AI Icon" className="w-5 h-5" />
         </button>
-        <div className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
-          <div className="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-xs font-bold text-orange-600">
-            M
-          </div>
+        <div className="flex h-10 items-center gap-2 rounded-full pl-1 text-[16px] font-semibold text-[#2D2D2D]">
+          <img
+            src="/icons/avatar.svg"
+            alt="Teacher image"
+            className=" h-8 w-8"
+          />
+
           <span>Madhur Rastogi</span>
           <svg
-            width="12"
-            height="12"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -532,22 +422,16 @@ function MobileHeader({
   showReset: boolean;
 }) {
   return (
-    <header className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-[#E8E8EC] flex-shrink-0">
+    <header className="md:hidden flex rounded-xl mx-2 my-3 items-center justify-between px-4 py-3 bg-white border-b border-[#E8E8EC] flex-shrink-0">
       <div className="flex items-center gap-2">
         <button className="text-gray-500 mr-1">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
-            <path d="M19 12H5M12 5l-7 7 7 7" />
-          </svg>
+          <img
+            src="/icons/Arrow_Left.svg"
+            alt="Arrow_Left Icon"
+            className="w-4 h-4"
+          />
         </button>
-        <VedaLogo size={26} />
+        {/* <VedaLogo size={26} /> */}
         <span className="font-bold text-base text-gray-900">VedaAI</span>
       </div>
       <div className="flex items-center gap-2">
@@ -560,32 +444,17 @@ function MobileHeader({
           </button>
         )}
         <button className="relative text-gray-400">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
+          <img
+            src="/icons/bell.svg"
+            alt="Notification Icon"
+            className="w-5 h-5"
+          />
           <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-orange-500" />
         </button>
-        <button className="text-gray-400">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-          </svg>
+        <button className="text-gray-400 mx-1">
+          <img src="/icons/avatar.svg" alt="User Icon" className="w-7 h-7" />
         </button>
-        <button className="text-gray-400">
+        <button className="text-gray-700">
           <svg
             width="20"
             height="20"
@@ -644,12 +513,12 @@ function UploadCard({
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      className="bg-white rounded-2xl border-2 border-dashed transition-all"
+      className="rounded-[16px] border-2 border-dashed bg-white transition-all"
       style={{
         borderColor: dragging ? "#F97316" : file ? "#E5E7EB" : "#E5E7EB",
         background: dragging ? "#FFF7ED" : "white",
         cursor: file ? "default" : "pointer",
-        minHeight: 120,
+        minHeight: 128,
       }}
     >
       <input
@@ -662,41 +531,44 @@ function UploadCard({
 
       {file ? (
         /* Filled state */
-        <div className="flex items-center gap-3 p-4">
-          {/* PDF icon */}
-          <div
-            className="flex-shrink-0 w-10 h-12 rounded flex items-center justify-center"
-            style={{ background: "#EF4444" }}
-          >
-            <span className="text-white text-[10px] font-bold">PDF</span>
+        <div className="h-full flex flex-wrap items-center justify-center">
+          <div className="flex items-center gap-3 p-4 bg-[#F6F6F6] rounded-2xl relative">
+            {/* PDF icon */}
+            <div className="flex-shrink-0 w-10 h-12 rounded flex items-center justify-center">
+              <img src="/icons/pdf.svg" alt="PDF Icon" className="w-10 h-10" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold text-gray-800 truncate">
+                {file.name}
+              </p>
+              <p className="text-xs text-gray-400 mt-0.5">
+                {formatSize(file.size)}
+              </p>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove();
+              }}
+              className="absolute right-[-8px] top-[-8px] bg-[#2B2B2BCC] w-6 h-6 rounded-full flex items-center justify-center text-white hover:text-gray-200 hover:bg-gray-800 transition-colors"
+              style={{ fontSize: 12 }}
+            >
+              ✕
+            </button>
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold text-gray-800 truncate">
-              {file.name}
-            </p>
-            <p className="text-xs text-gray-400 mt-0.5">
-              {formatSize(file.size)}
-            </p>
-          </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onRemove();
-            }}
-            className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
-            style={{ fontSize: 12 }}
-          >
-            ✕
-          </button>
         </div>
       ) : (
         /* Empty state */
-        <div className="flex flex-col items-center justify-center text-center py-8 px-4">
-          <UploadIcon />
-          <p className="mt-2.5 text-sm font-semibold text-gray-700">
+        <div className="flex min-h-[124px] flex-col items-center justify-center px-4 py-6 text-center">
+          <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[8px] bg-[#F3F3F3]">
+            <UploadIcon />
+          </div>
+          <p className="mt-4 text-[16px] font-bold leading-none text-[#2D2D2D]">
             {label} <span style={{ color: "#F97316" }}>{colorLabel}</span>
           </p>
-          <p className="text-xs text-gray-400 mt-1">Max 10MB</p>
+          <p className="mt-2 text-[13px] leading-none text-[#A3A3A3]">
+            Max 10MB
+          </p>
         </div>
       )}
     </div>
@@ -1089,291 +961,303 @@ export default function Home() {
   return (
     <div
       className="flex h-screen overflow-hidden"
-      style={{ background: "#F3F4F6", fontFamily: "'Inter', sans-serif" }}
+      style={{
+        background: `
+          linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.04) 60%, rgba(255, 255, 255, 0) 100%),
+          #e8eaed
+        `,
+        fontFamily: "'Inter', sans-serif",
+      }}
     >
       {/* ─── Sidebar ─── */}
       <Sidebar collapsed={isProcessing} />
 
       {/* ─── Main area ─── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Top bars */}
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden ">
         <MobileHeader onReset={resetAll} showReset={isResults} />
+        {/* Top bars */}
         <DesktopTopBar onReset={resetAll} showReset={isResults} />
-
-        {/* Error banner */}
-        {error && (
-          <div
-            className="mx-4 mt-3 flex-shrink-0 p-3 rounded-xl flex items-center justify-between gap-3 text-sm"
-            style={{
-              background: "#FEF2F2",
-              border: "1px solid #FECACA",
-              color: "#B91C1C",
-            }}
-          >
-            <span>{error}</span>
-            <button
-              onClick={() => setError(null)}
-              className="font-bold text-red-400 hover:text-red-600 text-xs flex-shrink-0"
+        <div className="mr-5 mb-3  py-4 h-[100%]">
+          {/* Error banner */}
+          {error && (
+            <div
+              className="  flex-shrink-0 p-3 rounded-xl flex items-center justify-between gap-3 text-sm"
+              style={{
+                background: "#FEF2F2",
+                border: "1px solid #FECACA",
+                color: "#B91C1C",
+              }}
             >
-              ✕
-            </button>
-          </div>
-        )}
-
-        {/* ══════════════ UPLOAD SCREEN ══════════════ */}
-        {appState === "upload" && (
-          <div className="flex-1 overflow-auto flex flex-col items-center justify-center px-5 py-10">
-            {/* Heading */}
-            <h1 className="text-2xl md:text-[28px] font-extrabold text-gray-900 text-center leading-tight mb-2">
-              Upload{" "}
-              <span
-                className="relative inline-block"
-                style={{ color: "#F97316" }}
-              >
-                Question Paper &amp; Answer Sheets
-                {/* Orange highlight bar */}
-                <span
-                  className="absolute bottom-0 left-0 right-0 rounded"
-                  style={{
-                    height: 6,
-                    background: "#FED7AA",
-                    opacity: 0.55,
-                    bottom: -1,
-                    zIndex: -1,
-                  }}
-                />
-              </span>
-            </h1>
-            <p className="text-sm text-gray-400 mb-6">
-              Upload both files to get started
-            </p>
-
-            {/* Teacher avatar */}
-            <TeacherAvatar />
-
-            {/* Upload cards */}
-            <div className="w-full max-w-xl mt-7 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <UploadCard
-                label="Upload"
-                colorLabel="Question Paper"
-                file={questionPaperFile}
-                dragging={qpDragging}
-                inputRef={qpInputRef}
-                onAreaClick={() => qpInputRef.current?.click()}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setQpDragging(true);
-                }}
-                onDragLeave={() => setQpDragging(false)}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  setQpDragging(false);
-                  handleFileSelect(
-                    e.dataTransfer.files[0],
-                    setQuestionPaperFile,
-                  );
-                }}
-                onInputChange={(e) =>
-                  handleFileSelect(e.target.files?.[0], setQuestionPaperFile)
-                }
-                onRemove={() => setQuestionPaperFile(null)}
-              />
-              <UploadCard
-                label="Upload"
-                colorLabel="Answer Sheet"
-                file={answerSheetFile}
-                dragging={asDragging}
-                inputRef={asInputRef}
-                onAreaClick={() => asInputRef.current?.click()}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setAsDragging(true);
-                }}
-                onDragLeave={() => setAsDragging(false)}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  setAsDragging(false);
-                  handleFileSelect(e.dataTransfer.files[0], setAnswerSheetFile);
-                }}
-                onInputChange={(e) =>
-                  handleFileSelect(e.target.files?.[0], setAnswerSheetFile)
-                }
-                onRemove={() => setAnswerSheetFile(null)}
-              />
-            </div>
-
-            {/* CTA */}
-            <div className="mt-6 flex flex-col items-center gap-2.5">
+              <span>{error}</span>
               <button
-                id="start-mapping-btn"
-                onClick={handleStartMapping}
-                disabled={!questionPaperFile || !answerSheetFile}
-                className="flex items-center gap-2 px-8 py-3 rounded-full font-semibold text-sm transition-all active:scale-95"
-                style={{
-                  background:
-                    questionPaperFile && answerSheetFile
-                      ? "#111827"
-                      : "#E5E7EB",
-                  color:
-                    questionPaperFile && answerSheetFile ? "white" : "#9CA3AF",
-                  cursor:
-                    questionPaperFile && answerSheetFile
-                      ? "pointer"
-                      : "not-allowed",
-                  boxShadow:
-                    questionPaperFile && answerSheetFile
-                      ? "0 2px 12px rgba(17,24,39,0.18)"
-                      : "none",
-                }}
+                onClick={() => setError(null)}
+                className="font-bold text-red-400 hover:text-red-600 text-xs flex-shrink-0"
               >
-                Start Mapping
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                ✕
               </button>
-              <p className="text-xs text-gray-400 text-center max-w-xs leading-relaxed">
-                Once both files are uploaded, you&apos;ll be able to map answers
-                with questions
-              </p>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ══════════════ LOADING SCREEN ══════════════ */}
-        {appState === "processing" && (
-          <div className="flex-1 bg-white flex flex-col items-center justify-center gap-4 px-4">
-            <SparkleLoader />
-            <div className="text-center">
-              <h2 className="text-xl font-bold text-gray-900 mt-2">
-                Extracting...
-              </h2>
-              <p className="text-sm text-gray-400 mt-1.5">
-                This may take a while
+          {/* ══════════════ UPLOAD SCREEN ══════════════ */}
+          {appState === "upload" && (
+            <div className="flex flex-1 flex-col items-center overflow-auto px-5 pb-10 pt-[72px]">
+              {/* Heading */}
+              <h1 className="mb-3 text-center text-2xl font-extrabold leading-tight text-[#2D2D2D] md:text-[34px]">
+                Upload{" "}
+                <span
+                  className="relative inline-block rounded-[7px] px-2.5 py-0.5 text-black md:text-[#F97316]  md:bg-[#FF935026] text-center justify-center"
+                  // style={{ color: "#F97316", fontFamily: "Bricolage Grotesque" }}
+                >
+                  Question Paper &amp; Answer Sheets
+                  {/* Orange highlight bar */}
+                  <span
+                    className="absolute inset-0 rounded-[8px]"
+                    style={{
+                      background: "#FFE7DB",
+                      opacity: 0.72,
+                      zIndex: -1,
+                    }}
+                  />
+                </span>
+              </h1>
+              <p className="mb-6 text-[18px] font-normal leading-none text-[#2D2D2D]">
+                Upload both files to get started
               </p>
-              <p className="text-xs text-gray-300 mt-3">{processingLabel}</p>
-            </div>
-          </div>
-        )}
 
-        {/* ══════════════ RESULTS SCREEN ══════════════ */}
-        {appState === "results" && session && (
-          <div className="flex-1 overflow-hidden flex flex-col">
-            {/* ── Mobile: tab switcher ── */}
-            <div className="md:hidden flex border-b border-gray-200 bg-white flex-shrink-0">
-              {(["questions", "sheet"] as MobileTab[]).map((tab) => (
+              {/* Teacher avatar */}
+              <TeacherAvatar />
+
+              {/* Upload cards */}
+              <div className="mt-7 grid w-full max-w-[760px] grid-cols-1 gap-4 rounded-[20px] bg-white/80 p-3 shadow-[0_24px_58px_rgba(0,0,0,0.08)] md:grid-cols-2">
+                <UploadCard
+                  label="Upload"
+                  colorLabel="Question Paper"
+                  file={questionPaperFile}
+                  dragging={qpDragging}
+                  inputRef={qpInputRef}
+                  onAreaClick={() => qpInputRef.current?.click()}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setQpDragging(true);
+                  }}
+                  onDragLeave={() => setQpDragging(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setQpDragging(false);
+                    handleFileSelect(
+                      e.dataTransfer.files[0],
+                      setQuestionPaperFile,
+                    );
+                  }}
+                  onInputChange={(e) =>
+                    handleFileSelect(e.target.files?.[0], setQuestionPaperFile)
+                  }
+                  onRemove={() => setQuestionPaperFile(null)}
+                />
+                <UploadCard
+                  label="Upload"
+                  colorLabel="Answer Sheet"
+                  file={answerSheetFile}
+                  dragging={asDragging}
+                  inputRef={asInputRef}
+                  onAreaClick={() => asInputRef.current?.click()}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setAsDragging(true);
+                  }}
+                  onDragLeave={() => setAsDragging(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setAsDragging(false);
+                    handleFileSelect(
+                      e.dataTransfer.files[0],
+                      setAnswerSheetFile,
+                    );
+                  }}
+                  onInputChange={(e) =>
+                    handleFileSelect(e.target.files?.[0], setAnswerSheetFile)
+                  }
+                  onRemove={() => setAnswerSheetFile(null)}
+                />
+              </div>
+
+              {/* CTA */}
+              <div className="mt-8 flex flex-col items-center gap-3">
                 <button
-                  key={tab}
-                  onClick={() => setMobileTab(tab)}
-                  className="flex-1 py-2.5 text-sm font-semibold transition-colors"
+                  id="start-mapping-btn"
+                  onClick={handleStartMapping}
+                  disabled={!questionPaperFile || !answerSheetFile}
+                  className="flex h-[42px] items-center gap-2 rounded-full px-7 text-[14px] font-semibold transition-all active:scale-95"
                   style={{
-                    color: mobileTab === tab ? "#111827" : "#9CA3AF",
-                    borderBottom:
-                      mobileTab === tab
-                        ? "2px solid #111827"
-                        : "2px solid transparent",
+                    background:
+                      questionPaperFile && answerSheetFile
+                        ? "#111827"
+                        : "#E5E7EB",
+                    color:
+                      questionPaperFile && answerSheetFile
+                        ? "white"
+                        : "#9CA3AF",
+                    cursor:
+                      questionPaperFile && answerSheetFile
+                        ? "pointer"
+                        : "not-allowed",
+                    boxShadow:
+                      questionPaperFile && answerSheetFile
+                        ? "0 2px 12px rgba(17,24,39,0.18)"
+                        : "none",
                   }}
                 >
-                  {tab === "questions"
-                    ? "Questions"
-                    : viewerMode === "questionPaper"
-                      ? "Question Paper"
-                      : "Answer Sheet"}
-                </button>
-              ))}
-            </div>
-
-            {/* ── Mobile: Questions panel ── */}
-            {mobileTab === "questions" && (
-              <div className="md:hidden flex-1 overflow-auto bg-white">
-                <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
-                  <span className="text-xs font-semibold text-gray-600">
-                    Extracted Questions (from question paper)
-                  </span>
-                </div>
-                <QuestionList
-                  questions={session.questions}
-                  mappings={session.mappings}
-                  grading={session.grading}
-                  selectedQuestionId={selectedQuestionId}
-                  onSelectQuestion={(qId) => {
-                    handleSelectQuestion(qId);
-                    setMobileTab("sheet");
-                  }}
-                />
-              </div>
-            )}
-
-            {/* ── Mobile: Answer Sheet panel ── */}
-            {mobileTab === "sheet" && (
-              <div className="md:hidden flex-1 overflow-hidden flex flex-col">
-                <DocumentViewer
-                  pages={activePages}
-                  answers={session.answers}
-                  selectedAnswerId={selectedAnswer?.id ?? null}
-                  selectedPage={selectedPage}
-                  setSelectedPage={setSelectedPage}
-                  zoom={zoom}
-                  setZoom={setZoom}
-                  mode={viewerMode}
-                  onModeChange={handleChangeViewerMode}
-                />
-              </div>
-            )}
-
-            {/* ── Desktop: two-panel layout ── */}
-            <div className="hidden md:flex flex-1 overflow-hidden">
-              {/* Left panel: Questions */}
-              <div
-                className="flex flex-col bg-[#F8F9FB] border-r border-[#E5E7EB] overflow-hidden flex-shrink-0"
-                style={{ width: 388 }}
-              >
-                <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
-                  <span className="text-xs font-semibold text-gray-600">
-                    Extracted Questions (from question paper)
-                  </span>
-                  <button
-                    className="text-xs font-medium"
-                    style={{ color: "#F97316" }}
+                  Start Mapping
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
                   >
-                    Expand all
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+                <p className="max-w-lg text-center text-[13px] leading-relaxed text-[#787878]">
+                  Once both files are uploaded, you&apos;ll be able to map
+                  answers with questions
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* ══════════════ LOADING SCREEN ══════════════ */}
+          {appState === "processing" && (
+            // <div className="px-2 py-2 h-full ">
+            <div className="flex-1 bg-white flex h-full flex-col rounded-2xl items-center justify-center gap-4 px-4">
+              <SparkleLoader />
+              <div className="text-center">
+                <h2 className="text-xl font-bold text-gray-900 mt-2">
+                  Extracting...
+                </h2>
+                <p className="text-sm text-gray-400 mt-1.5">
+                  This may take a while
+                </p>
+                <p className="text-xs text-gray-300 mt-3">{processingLabel}</p>
+              </div>
+            </div>
+            // </div>
+          )}
+
+          {/* ══════════════ RESULTS SCREEN ══════════════ */}
+          {appState === "results" && session && (
+            <div className="flex-1 overflow-hidden flex flex-col">
+              {/* ── Mobile: tab switcher ── */}
+              <div className="md:hidden flex border-b border-gray-200 bg-white flex-shrink-0">
+                {(["questions", "sheet"] as MobileTab[]).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setMobileTab(tab)}
+                    className="flex-1 py-2.5 text-sm font-semibold transition-colors"
+                    style={{
+                      color: mobileTab === tab ? "#111827" : "#9CA3AF",
+                      borderBottom:
+                        mobileTab === tab
+                          ? "2px solid #111827"
+                          : "2px solid transparent",
+                    }}
+                  >
+                    {tab === "questions"
+                      ? "Questions"
+                      : viewerMode === "questionPaper"
+                        ? "Question Paper"
+                        : "Answer Sheet"}
                   </button>
-                </div>
-                <div className="flex-1 overflow-auto">
+                ))}
+              </div>
+
+              {/* ── Mobile: Questions panel ── */}
+              {mobileTab === "questions" && (
+                <div className="md:hidden flex-1 overflow-auto bg-white">
+                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+                    <span className="text-xs font-semibold text-gray-600">
+                      Extracted Questions (from question paper)
+                    </span>
+                  </div>
                   <QuestionList
                     questions={session.questions}
                     mappings={session.mappings}
                     grading={session.grading}
                     selectedQuestionId={selectedQuestionId}
-                    onSelectQuestion={handleSelectQuestion}
+                    onSelectQuestion={(qId) => {
+                      handleSelectQuestion(qId);
+                      setMobileTab("sheet");
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* ── Mobile: Answer Sheet panel ── */}
+              {mobileTab === "sheet" && (
+                <div className="md:hidden flex-1 overflow-hidden flex flex-col">
+                  <DocumentViewer
+                    pages={activePages}
+                    answers={session.answers}
+                    selectedAnswerId={selectedAnswer?.id ?? null}
+                    selectedPage={selectedPage}
+                    setSelectedPage={setSelectedPage}
+                    zoom={zoom}
+                    setZoom={setZoom}
+                    mode={viewerMode}
+                    onModeChange={handleChangeViewerMode}
+                  />
+                </div>
+              )}
+
+              {/* ── Desktop: two-panel layout ── */}
+              <div className="hidden md:flex flex-1 overflow-hidden">
+                {/* Left panel: Questions */}
+                <div
+                  className="flex flex-col bg-[#F8F9FB] border-r border-[#E5E7EB] overflow-hidden flex-shrink-0"
+                  style={{ width: 388 }}
+                >
+                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+                    <span className="text-xs font-semibold text-gray-600">
+                      Extracted Questions (from question paper)
+                    </span>
+                    <button
+                      className="text-xs font-medium"
+                      style={{ color: "#F97316" }}
+                    >
+                      Expand all
+                    </button>
+                  </div>
+                  <div className="flex-1 overflow-auto">
+                    <QuestionList
+                      questions={session.questions}
+                      mappings={session.mappings}
+                      grading={session.grading}
+                      selectedQuestionId={selectedQuestionId}
+                      onSelectQuestion={handleSelectQuestion}
+                    />
+                  </div>
+                </div>
+
+                {/* Right panel: Answer sheet viewer */}
+                <div className="flex-1 overflow-hidden bg-[#F3F4F6]">
+                  <DocumentViewer
+                    pages={activePages}
+                    answers={session.answers}
+                    selectedAnswerId={selectedAnswer?.id ?? null}
+                    selectedPage={selectedPage}
+                    setSelectedPage={setSelectedPage}
+                    zoom={zoom}
+                    setZoom={setZoom}
+                    mode={viewerMode}
+                    onModeChange={handleChangeViewerMode}
                   />
                 </div>
               </div>
-
-              {/* Right panel: Answer sheet viewer */}
-              <div className="flex-1 overflow-hidden bg-[#F3F4F6]">
-                <DocumentViewer
-                  pages={activePages}
-                  answers={session.answers}
-                  selectedAnswerId={selectedAnswer?.id ?? null}
-                  selectedPage={selectedPage}
-                  setSelectedPage={setSelectedPage}
-                  zoom={zoom}
-                  setZoom={setZoom}
-                  mode={viewerMode}
-                  onModeChange={handleChangeViewerMode}
-                />
-              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
