@@ -72,14 +72,7 @@ export default function QuestionList({
   const gradingByQId = new Map(grading.map((g) => [g.questionId, g]));
 
   return (
-    <div className="space-y-3 w-full px-3 py-3">
-      <div className="flex items-center justify-between px-1 pb-1">
-        <h2 className="text-[11px] font-extrabold tracking-[0.18em] text-slate-500 uppercase">
-          Questions List ({questions.length})
-        </h2>
-        <span className="text-[11px] text-slate-400">Natural Sorted</span>
-      </div>
-
+    <div className="space-y-3 w-full px-3 py-0">
       {sortedQuestions.length === 0 ? (
         <div className="p-6 rounded-2xl bg-white border border-slate-200 text-center text-xs text-slate-500 shadow-[0_8px_24px_rgba(15,23,42,0.04)]">
           No questions available.

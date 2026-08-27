@@ -610,7 +610,7 @@ function DocumentViewer({
           <span className="text-xs font-semibold text-white/80 hidden md:block">
             {isQuestionPaper ? "Question Paper" : "Answer Sheet"}
           </span>
-          <div className="inline-flex rounded-lg border border-white/10 bg-white/5 p-0.5 text-[11px] font-semibold">
+          {/* <div className="inline-flex rounded-lg border border-white/10 bg-white/5 p-0.5 text-[11px] font-semibold">
             <button
               type="button"
               onClick={() => onModeChange("questionPaper")}
@@ -633,12 +633,13 @@ function DocumentViewer({
             >
               Answer Sheet
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center gap-4">
           {/* Zoom */}
           <div className="flex items-center gap-1 text-xs text-white/70">
             <button
+              type="button"
               onClick={() => setZoom(Math.max(50, zoom - 25))}
               className="w-5 h-5 rounded flex items-center justify-center hover:bg-white/10 font-bold"
             >
@@ -648,6 +649,7 @@ function DocumentViewer({
               {zoom}%
             </span>
             <button
+              type="button"
               onClick={() => setZoom(Math.min(200, zoom + 25))}
               className="w-5 h-5 rounded flex items-center justify-center hover:bg-white/10 font-bold"
             >
@@ -657,6 +659,7 @@ function DocumentViewer({
           {/* Page navigation */}
           <div className="flex items-center gap-1 text-xs text-white/70">
             <button
+              type="button"
               onClick={() => setSelectedPage(Math.max(1, selectedPage - 1))}
               disabled={selectedPage <= 1}
               className="w-5 h-5 rounded flex items-center justify-center hover:bg-white/10 disabled:opacity-30 font-bold"
@@ -667,6 +670,7 @@ function DocumentViewer({
               Page {selectedPage} of {pages.length}
             </span>
             <button
+              type="button"
               onClick={() =>
                 setSelectedPage(Math.min(pages.length, selectedPage + 1))
               }
@@ -688,9 +692,8 @@ function DocumentViewer({
           <div
             className="relative inline-block rounded-xl bg-white shadow-[0_16px_34px_rgba(15,23,42,0.10)] overflow-hidden"
             style={{
-              transformOrigin: "top left",
-              transform: `scale(${zoom / 100})`,
-              width: `${10000 / zoom}%`,
+              width: `${zoom}%`,
+              minWidth: zoom >= 100 ? "100%" : undefined,
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element -- base64 page previews are rendered from uploaded files */}
@@ -765,9 +768,12 @@ export default function Home() {
   const [viewerMode, setViewerMode] = useState<ViewerMode>("answerSheet");
   const [zoom, setZoom] = useState(100);
   const [expandAllQuestions, setExpandAllQuestions] = useState(false);
+  const [questionPanelWidth, setQuestionPanelWidth] = useState(388);
+  const [isDraggingSplit, setIsDraggingSplit] = useState(false);
 
   const qpInputRef = useRef<HTMLInputElement>(null);
   const asInputRef = useRef<HTMLInputElement>(null);
+  const desktopSplitRef = useRef<HTMLDivElement>(null);
 
   const handleFileSelect = (
     file: File | undefined,
@@ -919,7 +925,9 @@ export default function Home() {
     session?.mappings
       .filter((mapping) => mapping.status === "matched" && mapping.answerId)
       .map((mapping) => mapping.answerId!)
-      .filter((answerId, index, answerIds) => answerIds.indexOf(answerId) === index) ?? [];
+      .filter(
+        (answerId, index, answerIds) => answerIds.indexOf(answerId) === index,
+      ) ?? [];
 
   const highlightedAnswerIds = selectedAnswer
     ? [selectedAnswer.id]
@@ -976,6 +984,17 @@ export default function Home() {
     setExpandAllQuestions(true);
     setViewerMode("answerSheet");
     setSelectedPage(1);
+  };
+
+  const updateQuestionPanelWidth = (clientX: number) => {
+    const splitContainer = desktopSplitRef.current;
+    if (!splitContainer) return;
+
+    const bounds = splitContainer.getBoundingClientRect();
+    const nextWidth = clientX - bounds.left;
+    const maxWidth = Math.max(360, bounds.width - 520);
+    const clampedWidth = Math.min(Math.max(nextWidth, 320), maxWidth);
+    setQuestionPanelWidth(clampedWidth);
   };
 
   const activePages =
@@ -1211,13 +1230,13 @@ export default function Home() {
                   </div>
                   <QuestionList
                     questions={session.questions}
-                  mappings={session.mappings}
-                  grading={session.grading}
-                  selectedQuestionId={selectedQuestionId}
-                  expandedQuestionIds={expandedQuestionIds}
-                  onSelectQuestion={(qId) => {
-                    handleSelectQuestion(qId);
-                    setMobileTab("sheet");
+                    mappings={session.mappings}
+                    grading={session.grading}
+                    selectedQuestionId={selectedQuestionId}
+                    expandedQuestionIds={expandedQuestionIds}
+                    onSelectQuestion={(qId) => {
+                      handleSelectQuestion(qId);
+                      setMobileTab("sheet");
                     }}
                   />
                 </div>
@@ -1241,21 +1260,28 @@ export default function Home() {
               )}
 
               {/* ── Desktop: two-panel layout ── */}
-              <div className="hidden min-h-0 flex-1 overflow-hidden md:flex">
+              <div
+                ref={desktopSplitRef}
+                className={`hidden min-h-0 flex-1 overflow-hidden md:flex ${
+                  isDraggingSplit ? "cursor-col-resize select-none" : ""
+                }`}
+              >
                 {/* Left panel: Questions */}
                 <div
-                  className="flex min-h-0 flex-shrink-0 flex-col overflow-hidden border-r border-[#E5E7EB] bg-[#F8F9FB]"
-                  style={{ width: 388 }}
+                  className="flex min-h-0 flex-shrink-0  flex-col overflow-hidden border-r border-[#E5E7EB] bg-[#FFFFFF80] rounded-2xl"
+                  style={{ width: questionPanelWidth }}
                 >
-                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
-                    <span className="text-xs font-semibold text-gray-600">
+                  <div className="flex items-center  justify-between px-4 py-3 ">
+                    <span className="text-[13px] font-bold text-gray-600">
                       Extracted Questions (from question paper)
                     </span>
                     <button
                       type="button"
                       onClick={handleExpandAllQuestions}
-                      className="text-xs font-medium"
-                      style={{ color: expandAllQuestions ? "#16A34A" : "#F97316" }}
+                      className="text-xs font-bold bg-white px-3 py-3 rounded-full transition-colors hover:bg-gray-50"
+                      style={{
+                        color: expandAllQuestions ? "#16A34A" : "#000000",
+                      }}
                     >
                       Expand all
                     </button>
@@ -1272,8 +1298,77 @@ export default function Home() {
                   </div>
                 </div>
 
+                <div
+                  role="separator"
+                  aria-orientation="vertical"
+                  aria-label="Resize question and answer panels"
+                  aria-valuemin={320}
+                  aria-valuemax={900}
+                  aria-valuenow={Math.round(questionPanelWidth)}
+                  tabIndex={0}
+                  onPointerDown={(event) => {
+                    event.preventDefault();
+                    setIsDraggingSplit(true);
+                    event.currentTarget.setPointerCapture(event.pointerId);
+                    updateQuestionPanelWidth(event.clientX);
+                  }}
+                  onPointerMove={(event) => {
+                    if (!isDraggingSplit) return;
+                    updateQuestionPanelWidth(event.clientX);
+                  }}
+                  onPointerUp={(event) => {
+                    setIsDraggingSplit(false);
+                    if (
+                      event.currentTarget.hasPointerCapture(event.pointerId)
+                    ) {
+                      event.currentTarget.releasePointerCapture(
+                        event.pointerId,
+                      );
+                    }
+                  }}
+                  onPointerCancel={() => setIsDraggingSplit(false)}
+                  onDoubleClick={() => setQuestionPanelWidth(388)}
+                  onKeyDown={(event) => {
+                    if (
+                      event.key !== "ArrowLeft" &&
+                      event.key !== "ArrowRight"
+                    ) {
+                      return;
+                    }
+
+                    event.preventDefault();
+                    const direction = event.key === "ArrowLeft" ? -24 : 24;
+                    setQuestionPanelWidth((currentWidth) => {
+                      const splitContainer = desktopSplitRef.current;
+                      const containerWidth =
+                        splitContainer?.getBoundingClientRect().width ?? 1280;
+                      const maxWidth = Math.max(360, containerWidth - 520);
+                      return Math.min(
+                        Math.max(currentWidth + direction, 320),
+                        maxWidth,
+                      );
+                    });
+                  }}
+                  className="group relative z-10 flex w-4 flex-shrink-0 cursor-col-resize items-stretch justify-center touch-none"
+                >
+                  {/* <div
+                    className={`h-full w-full rounded-xl transition-colors ${
+                      isDraggingSplit
+                        ? "bg-emerald-500/10"
+                        : "bg-transparent group-hover:bg-white/35"
+                    }`}
+                  /> */}
+                  <div
+                    className={`absolute top-1/2 h-17 w-4 -translate-y-1/2 rounded-full border border-slate-400 bg-white shadow-[0_4px_14px_rgba(15,23,42,0.18)] transition-all ${
+                      isDraggingSplit
+                        ? "scale-110 border-emerald-400 bg-emerald-50"
+                        : "group-hover:border-slate-300"
+                    }`}
+                  />
+                </div>
+
                 {/* Right panel: Answer sheet viewer */}
-                <div className="min-h-0 flex-1 overflow-hidden bg-[#F3F4F6]">
+                <div className="min-h-0 flex-1 overflow-hidden rounded-2xl bg-[#FFFFFF80]">
                   <DocumentViewer
                     pages={activePages}
                     answers={session.answers}
